@@ -12,7 +12,7 @@ interface PageData {
   selector: 'app-placeholder-page',
   template: `
     <section class="page-card">
-      <p class="eyebrow">Minimal working product</p>
+      <p class="eyebrow">Produit minimum opérationnel</p>
       <h1>{{ page().title }}</h1>
       <p>{{ page().description }}</p>
     </section>
@@ -62,13 +62,15 @@ export class PlaceholderPage {
     this.route.data.pipe(
       map((data) => ({
         title: String(data['title'] ?? 'Page'),
-        description: String(data['description'] ?? 'This page is ready for its first vertical slice.'),
+        description: String(
+          data['description'] ?? 'Cette page est prête pour sa première verticale fonctionnelle.',
+        ),
       })),
     ),
     {
       initialValue: {
         title: 'Page',
-        description: 'This page is ready for its first vertical slice.',
+        description: 'Cette page est prête pour sa première verticale fonctionnelle.',
       },
     },
   );

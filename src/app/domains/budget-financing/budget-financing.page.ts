@@ -42,7 +42,7 @@ interface BudgetSummary {
 }
 
 const defaultBudgetDraft = (): BudgetDraft => ({
-  category: 'Shared infrastructure',
+  category: 'Infrastructure partagée',
   label: '',
   scope: 'shared',
   amount: 0,
@@ -66,43 +66,45 @@ const defaultFinancingDraft = (): FinancingDraft => ({
     <section class="budget-page">
       <header class="hero">
         <div>
-          <p class="eyebrow">Budget and financing</p>
-          <h1>Control private and shared construction costs</h1>
+          <p class="eyebrow">Budget et financement</p>
+          <h1>Piloter les coûts privés et partagés de construction</h1>
           <p>
-            Track planned costs, who pays them, how they are allocated between the two families, and
-            which financing is secured.
+            Suivez les coûts prévus, qui les paie, comment ils sont répartis entre les deux familles
+            et quels financements sont sécurisés.
           </p>
         </div>
         <aside class="storage-card">
           <span>{{ persistenceLabel }}</span>
-          <strong>Last saved {{ store.updatedAt() | date: 'short' }}</strong>
-          <button type="button" (click)="resetDemoData()">Reset demo data</button>
+          <strong>Dernier enregistrement le {{ store.updatedAt() | date: 'short' }}</strong>
+          <button type="button" (click)="resetDemoData()">
+            Réinitialiser les données de démonstration
+          </button>
         </aside>
       </header>
 
-      <section class="summary-grid" aria-label="Budget summary">
+      <section class="summary-grid" aria-label="Résumé du budget">
         <article>
-          <span>Planned budget</span>
+          <span>Budget prévisionnel</span>
           <strong>{{ summary().plannedTotal | currency: 'EUR' : 'symbol' : '1.0-0' }}</strong>
         </article>
         <article>
-          <span>Paid or advanced</span>
+          <span>Payé ou avancé</span>
           <strong>{{ summary().paidTotal | currency: 'EUR' : 'symbol' : '1.0-0' }}</strong>
         </article>
         <article>
-          <span>Shared costs</span>
+          <span>Coûts partagés</span>
           <strong>{{ summary().sharedTotal | currency: 'EUR' : 'symbol' : '1.0-0' }}</strong>
         </article>
         <article>
-          <span>Secured funding</span>
+          <span>Financement sécurisé</span>
           <strong>{{ summary().securedFunding | currency: 'EUR' : 'symbol' : '1.0-0' }}</strong>
         </article>
         <article class="warning-card" [class.blocked]="summary().fundingGap > 0">
-          <span>Funding gap against secured funds</span>
+          <span>Écart par rapport aux fonds sécurisés</span>
           <strong>{{ summary().fundingGap | currency: 'EUR' : 'symbol' : '1.0-0' }}</strong>
         </article>
         <article>
-          <span>10% contingency target</span>
+          <span>Provision cible de 10 %</span>
           <strong>{{ summary().contingencyTarget | currency: 'EUR' : 'symbol' : '1.0-0' }}</strong>
         </article>
       </section>
@@ -111,19 +113,19 @@ const defaultFinancingDraft = (): FinancingDraft => ({
         <article class="panel">
           <div class="panel-heading">
             <div>
-              <p class="eyebrow">Allocation</p>
-              <h2>Family exposure</h2>
+              <p class="eyebrow">Répartition</p>
+              <h2>Exposition des familles</h2>
             </div>
           </div>
           <div class="allocation-bars">
             <div>
-              <span>Family A allocation</span>
+              <span>Part de la famille A</span>
               <strong>{{
                 summary().familyAAllocation | currency: 'EUR' : 'symbol' : '1.0-0'
               }}</strong>
             </div>
             <div>
-              <span>Family B allocation</span>
+              <span>Part de la famille B</span>
               <strong>{{
                 summary().familyBAllocation | currency: 'EUR' : 'symbol' : '1.0-0'
               }}</strong>
@@ -134,17 +136,17 @@ const defaultFinancingDraft = (): FinancingDraft => ({
         <article class="panel">
           <div class="panel-heading">
             <div>
-              <p class="eyebrow">Coverage</p>
-              <h2>Financing status</h2>
+              <p class="eyebrow">Couverture</p>
+              <h2>État du financement</h2>
             </div>
           </div>
           <div class="allocation-bars">
             <div>
-              <span>Pending funding</span>
+              <span>Financement en attente</span>
               <strong>{{ summary().pendingFunding | currency: 'EUR' : 'symbol' : '1.0-0' }}</strong>
             </div>
             <div>
-              <span>Total identified funding</span>
+              <span>Total des financements identifiés</span>
               <strong>{{ identifiedFunding() | currency: 'EUR' : 'symbol' : '1.0-0' }}</strong>
             </div>
           </div>
@@ -154,24 +156,24 @@ const defaultFinancingDraft = (): FinancingDraft => ({
       <section class="panel">
         <div class="panel-heading">
           <div>
-            <p class="eyebrow">Costs</p>
-            <h2>Add a budget line</h2>
+            <p class="eyebrow">Coûts</p>
+            <h2>Ajouter une ligne budgétaire</h2>
           </div>
         </div>
 
         <form class="entry-form" (ngSubmit)="addBudgetLine()">
           <label>
-            Label
+            Libellé
             <input
               name="budgetLabel"
               required
               [ngModel]="budgetDraft().label"
               (ngModelChange)="updateBudgetDraft('label', $event)"
-              placeholder="Example: Shared water connection"
+              placeholder="Exemple : raccordement d'eau partagé"
             />
           </label>
           <label>
-            Category
+            Catégorie
             <select
               name="budgetCategory"
               [ngModel]="budgetDraft().category"
@@ -183,7 +185,7 @@ const defaultFinancingDraft = (): FinancingDraft => ({
             </select>
           </label>
           <label>
-            Amount
+            Montant
             <input
               name="budgetAmount"
               type="number"
@@ -194,34 +196,34 @@ const defaultFinancingDraft = (): FinancingDraft => ({
             />
           </label>
           <label>
-            Scope
+            Périmètre
             <select
               name="budgetScope"
               [ngModel]="budgetDraft().scope"
               (ngModelChange)="updateBudgetScope($event)"
             >
-              <option value="shared">Shared</option>
-              <option value="family-a">Family A private</option>
-              <option value="family-b">Family B private</option>
+              <option value="shared">Partagé</option>
+              <option value="family-a">Privé famille A</option>
+              <option value="family-b">Privé famille B</option>
             </select>
           </label>
           <label>
-            Paid by
+            Payé par
             <select
               name="paidBy"
               [ngModel]="budgetDraft().paidBy"
               (ngModelChange)="updateBudgetDraft('paidBy', $event)"
             >
-              <option value="not-paid">Not paid yet</option>
-              <option value="family-a">Family A</option>
-              <option value="family-b">Family B</option>
-              <option value="shared-account">Shared account</option>
+              <option value="not-paid">Pas encore payé</option>
+              <option value="family-a">Famille A</option>
+              <option value="family-b">Famille B</option>
+              <option value="shared-account">Compte commun</option>
             </select>
           </label>
 
           @if (budgetDraft().scope === 'shared') {
             <label>
-              Family A share %
+              Part famille A %
               <input
                 name="familyAShare"
                 type="number"
@@ -232,7 +234,7 @@ const defaultFinancingDraft = (): FinancingDraft => ({
               />
             </label>
             <label>
-              Family B share %
+              Part famille B %
               <input
                 name="familyBShare"
                 type="number"
@@ -244,23 +246,25 @@ const defaultFinancingDraft = (): FinancingDraft => ({
             </label>
           }
 
-          <button type="submit" [disabled]="!canAddBudgetLine()">Add budget line</button>
+          <button type="submit" [disabled]="!canAddBudgetLine()">
+            Ajouter la ligne budgétaire
+          </button>
         </form>
 
         @if (allocationWarning()) {
-          <p class="form-warning">Family allocation must total 100%.</p>
+          <p class="form-warning">La répartition entre familles doit totaliser 100 %.</p>
         }
 
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Line</th>
-                <th>Scope</th>
-                <th>Amount</th>
-                <th>Family A</th>
-                <th>Family B</th>
-                <th>Paid by</th>
+                <th>Ligne</th>
+                <th>Périmètre</th>
+                <th>Montant</th>
+                <th>Famille A</th>
+                <th>Famille B</th>
+                <th>Payé par</th>
                 <th></th>
               </tr>
             </thead>
@@ -286,13 +290,13 @@ const defaultFinancingDraft = (): FinancingDraft => ({
                   <td>{{ paymentLabels[line.paidBy] }}</td>
                   <td>
                     <button class="text-button" type="button" (click)="removeBudgetLine(line.id)">
-                      Remove
+                      Supprimer
                     </button>
                   </td>
                 </tr>
               } @empty {
                 <tr>
-                  <td colspan="7">No budget line yet.</td>
+                  <td colspan="7">Aucune ligne budgétaire pour le moment.</td>
                 </tr>
               }
             </tbody>
@@ -303,32 +307,32 @@ const defaultFinancingDraft = (): FinancingDraft => ({
       <section class="panel">
         <div class="panel-heading">
           <div>
-            <p class="eyebrow">Financing</p>
-            <h2>Add a financing source</h2>
+            <p class="eyebrow">Financement</p>
+            <h2>Ajouter une source de financement</h2>
           </div>
         </div>
 
         <form class="entry-form" (ngSubmit)="addFinancingSource()">
           <label>
-            Label
+            Libellé
             <input
               name="financingLabel"
               required
               [ngModel]="financingDraft().label"
               (ngModelChange)="updateFinancingDraft('label', $event)"
-              placeholder="Example: Family A bank loan"
+              placeholder="Exemple : prêt bancaire famille A"
             />
           </label>
           <label>
-            Owner
+            Porteur
             <select
               name="financingOwner"
               [ngModel]="financingDraft().owner"
               (ngModelChange)="updateFinancingDraft('owner', $event)"
             >
-              <option value="family-a">Family A</option>
-              <option value="family-b">Family B</option>
-              <option value="shared">Shared</option>
+              <option value="family-a">Famille A</option>
+              <option value="family-b">Famille B</option>
+              <option value="shared">Partagé</option>
             </select>
           </label>
           <label>
@@ -338,26 +342,26 @@ const defaultFinancingDraft = (): FinancingDraft => ({
               [ngModel]="financingDraft().type"
               (ngModelChange)="updateFinancingDraft('type', $event)"
             >
-              <option value="loan">Loan</option>
-              <option value="personal-contribution">Personal contribution</option>
-              <option value="gift">Gift</option>
-              <option value="grant">Grant</option>
-              <option value="other">Other</option>
+              <option value="loan">Prêt</option>
+              <option value="personal-contribution">Apport personnel</option>
+              <option value="gift">Don</option>
+              <option value="grant">Subvention</option>
+              <option value="other">Autre</option>
             </select>
           </label>
           <label>
-            Status
+            Statut
             <select
               name="financingStatus"
               [ngModel]="financingDraft().status"
               (ngModelChange)="updateFinancingDraft('status', $event)"
             >
-              <option value="secured">Secured</option>
-              <option value="pending">Pending</option>
+              <option value="secured">Sécurisé</option>
+              <option value="pending">En attente</option>
             </select>
           </label>
           <label>
-            Amount
+            Montant
             <input
               name="financingAmount"
               type="number"
@@ -367,7 +371,9 @@ const defaultFinancingDraft = (): FinancingDraft => ({
               (ngModelChange)="updateFinancingAmount($event)"
             />
           </label>
-          <button type="submit" [disabled]="!canAddFinancingSource()">Add financing</button>
+          <button type="submit" [disabled]="!canAddFinancingSource()">
+            Ajouter le financement
+          </button>
         </form>
 
         <div class="finance-list">
@@ -380,15 +386,15 @@ const defaultFinancingDraft = (): FinancingDraft => ({
                 >
               </div>
               <span class="status" [class.pending]="source.status === 'pending'">{{
-                source.status
+                financingStatusLabels[source.status]
               }}</span>
               <strong>{{ source.amount | currency: 'EUR' : 'symbol' : '1.0-0' }}</strong>
               <button class="text-button" type="button" (click)="removeFinancingSource(source.id)">
-                Remove
+                Supprimer
               </button>
             </article>
           } @empty {
-            <p class="empty-state">No financing source yet.</p>
+            <p class="empty-state">Aucune source de financement pour le moment.</p>
           }
         </div>
       </section>
@@ -660,50 +666,55 @@ export class BudgetFinancingPage {
   protected readonly store = inject(BudgetFinancingStore);
 
   protected readonly budgetCategories = [
-    'Land acquisition',
-    'Legal and administration',
-    'Technical studies',
-    'Shared infrastructure',
-    'House A private works',
-    'House B private works',
-    'Taxes and public charges',
-    'Insurance and guarantees',
-    'Contingency',
+    'Acquisition du terrain',
+    'Juridique et administration',
+    'Études techniques',
+    'Infrastructure partagée',
+    'Travaux privés maison A',
+    'Travaux privés maison B',
+    'Taxes et charges publiques',
+    'Assurances et garanties',
+    'Provision pour imprévus',
   ];
 
   protected readonly scopeLabels: Record<BudgetScope, string> = {
-    'family-a': 'Family A private',
-    'family-b': 'Family B private',
-    shared: 'Shared',
+    'family-a': 'Privé famille A',
+    'family-b': 'Privé famille B',
+    shared: 'Partagé',
   };
 
   protected readonly paymentLabels: Record<PaymentSource, string> = {
-    'family-a': 'Family A',
-    'family-b': 'Family B',
-    'shared-account': 'Shared account',
-    'not-paid': 'Not paid yet',
+    'family-a': 'Famille A',
+    'family-b': 'Famille B',
+    'shared-account': 'Compte commun',
+    'not-paid': 'Pas encore payé',
   };
 
   protected readonly ownerLabels: Record<FinancingOwner, string> = {
-    'family-a': 'Family A',
-    'family-b': 'Family B',
-    shared: 'Shared',
+    'family-a': 'Famille A',
+    'family-b': 'Famille B',
+    shared: 'Partagé',
   };
 
   protected readonly financingTypeLabels: Record<FinancingType, string> = {
-    gift: 'Gift',
-    grant: 'Grant',
-    loan: 'Loan',
-    other: 'Other',
-    'personal-contribution': 'Personal contribution',
+    gift: 'Don',
+    grant: 'Subvention',
+    loan: 'Prêt',
+    other: 'Autre',
+    'personal-contribution': 'Apport personnel',
+  };
+
+  protected readonly financingStatusLabels: Record<FinancingStatus, string> = {
+    pending: 'En attente',
+    secured: 'Sécurisé',
   };
 
   protected readonly budgetDraft = signal<BudgetDraft>(defaultBudgetDraft());
   protected readonly financingDraft = signal<FinancingDraft>(defaultFinancingDraft());
 
   protected readonly persistenceLabel = this.store.localStorageAvailable
-    ? 'Local storage enabled'
-    : 'In-memory draft only';
+    ? 'Stockage local activé'
+    : 'Brouillon en mémoire uniquement';
 
   protected readonly summary = computed<BudgetSummary>(() => {
     const budgetLines = this.store.budgetLines();

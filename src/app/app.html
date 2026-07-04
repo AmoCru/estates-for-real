@@ -1,10 +1,14 @@
 <div class="app-shell">
-  <aside class="sidebar" aria-label="Primary navigation">
-    <a class="brand" routerLink="/projects/42/dashboard" aria-label="Estates for Real dashboard">
+  <aside class="sidebar" aria-label="Navigation principale">
+    <a
+      class="brand"
+      routerLink="/projects/42/dashboard"
+      aria-label="Tableau de bord Estates for Real"
+    >
       <span class="brand-mark">ER</span>
       <span>
         <strong>Estates for Real</strong>
-        <small>Construction project control</small>
+        <small>Pilotage de projet de construction</small>
       </span>
     </a>
 
@@ -31,19 +35,19 @@
           <h2>{{ currentProject.name }}</h2>
           <span>{{ currentProject.phase }}</span>
         </div>
-        <div class="user-chip" aria-label="Current role">
+        <div class="user-chip" aria-label="Rôle actuel">
           {{ currentProject.role }}
         </div>
       } @else {
         <div>
-          <p class="eyebrow">Loading mock project</p>
-          <h2>Preparing workspace</h2>
-          <span>Mock backend call in progress</span>
+          <p class="eyebrow">Chargement du projet de démonstration</p>
+          <h2>Préparation de l'espace de travail</h2>
+          <span>Appel au service de démonstration en cours</span>
         </div>
       }
     </header>
 
-    <section class="metrics" aria-label="Project summary">
+    <section class="metrics" aria-label="Résumé du projet">
       @for (metric of metrics(); track metric.label) {
         <article class="metric" [class]="metric.status">
           <span>{{ metric.label }}</span>

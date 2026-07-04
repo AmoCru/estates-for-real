@@ -10,10 +10,10 @@ const projectApiStub = {
   getProjectShell: () =>
     of({
       id: '42',
-      name: 'Two families, one land',
-      phase: 'Feasibility and legal structure',
-      role: 'Family A representative',
-      scope: 'Shared project view',
+      name: 'Deux familles, un terrain',
+      phase: 'Faisabilité et structure juridique',
+      role: 'Représentant famille A',
+      scope: 'Vue projet partagée',
     }),
   getNavigation: () => of([]),
   getShellMetrics: () => of([]),

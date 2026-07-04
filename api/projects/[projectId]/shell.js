@@ -1,35 +1,35 @@
 const fallbackProject = {
   id: '42',
-  name: 'Two families, one land',
-  phase: 'Feasibility and legal structure',
-  role: 'Family A representative',
-  scope: 'Shared project view',
+  name: 'Deux familles, un terrain',
+  phase: 'Faisabilité et structure juridique',
+  role: 'Représentant famille A',
+  scope: 'Vue projet partagée',
 };
 
 const fallbackMetrics = [
-  { label: 'Missing documents', value: '14', status: 'warning' },
-  { label: 'Shared blockers', value: '3', status: 'blocked' },
-  { label: 'Pending approvals', value: '5', status: 'warning' },
+  { label: 'Documents manquants', value: '14', status: 'warning' },
+  { label: 'Blocages partagés', value: '3', status: 'blocked' },
+  { label: 'Validations en attente', value: '5', status: 'warning' },
 ];
 
 const navigationItems = [
-  { label: 'Dashboard', segment: 'dashboard', priority: 'P0' },
-  { label: 'Onboarding', path: '/projects/new', priority: 'P0' },
+  { label: 'Tableau de bord', segment: 'dashboard', priority: 'P0' },
+  { label: 'Initialisation', path: '/projects/new', priority: 'P0' },
   { label: 'Documents', segment: 'documents', priority: 'P0' },
-  { label: 'Budget and financing', segment: 'budget-financing', priority: 'P0' },
-  { label: 'Legal structure', segment: 'legal-structure', priority: 'P0' },
-  { label: 'Urbanism and permits', segment: 'urbanism-permits', priority: 'P0' },
-  { label: 'Decisions and meetings', segment: 'decisions-meetings', priority: 'P0' },
-  { label: 'Shared assets', segment: 'shared-assets', priority: 'P0' },
-  { label: 'Risks', segment: 'risks', priority: 'P0' },
-  { label: 'Contracts and professionals', segment: 'contracts-professionals', priority: 'P1' },
-  { label: 'Land', segment: 'land', priority: 'P1' },
-  { label: 'Schedule', segment: 'schedule', priority: 'P1' },
-  { label: 'Site and quality', segment: 'site-quality', priority: 'P1' },
-  { label: 'Reports and exports', segment: 'reports-exports', priority: 'P1' },
-  { label: 'Procurement and materials', segment: 'procurement-materials', priority: 'P2' },
-  { label: 'Design and technical', segment: 'design-technical', priority: 'P2' },
-  { label: 'Settings', segment: 'settings', priority: 'P0' },
+  { label: 'Budget et financement', segment: 'budget-financing', priority: 'P0' },
+  { label: 'Structure juridique', segment: 'legal-structure', priority: 'P0' },
+  { label: 'Urbanisme et permis', segment: 'urbanism-permits', priority: 'P0' },
+  { label: 'Décisions et réunions', segment: 'decisions-meetings', priority: 'P0' },
+  { label: 'Infrastructures partagées', segment: 'shared-assets', priority: 'P0' },
+  { label: 'Risques', segment: 'risks', priority: 'P0' },
+  { label: 'Contrats et professionnels', segment: 'contracts-professionals', priority: 'P1' },
+  { label: 'Terrain', segment: 'land', priority: 'P1' },
+  { label: 'Planning', segment: 'schedule', priority: 'P1' },
+  { label: 'Chantier et qualité', segment: 'site-quality', priority: 'P1' },
+  { label: 'Rapports et exports', segment: 'reports-exports', priority: 'P1' },
+  { label: 'Achats et matériaux', segment: 'procurement-materials', priority: 'P2' },
+  { label: 'Conception et technique', segment: 'design-technical', priority: 'P2' },
+  { label: 'Paramètres', segment: 'settings', priority: 'P0' },
 ];
 
 function createNavigation(projectId) {
@@ -86,7 +86,9 @@ async function readProject(projectId) {
 
   if (!supabaseResponse.ok) {
     const detail = await supabaseResponse.text();
-    throw new Error(`Supabase project lookup failed: ${supabaseResponse.status} ${detail}`);
+    throw new Error(
+      `La recherche du projet Supabase a échoué : ${supabaseResponse.status} ${detail}`,
+    );
   }
 
   const rows = await supabaseResponse.json();
@@ -98,7 +100,7 @@ async function readProject(projectId) {
 export default async function handler(request, response) {
   if (request.method !== 'GET') {
     response.setHeader('Allow', 'GET');
-    return response.status(405).json({ error: 'Method not allowed' });
+    return response.status(405).json({ error: 'Méthode non autorisée' });
   }
 
   const requestedProjectId = Array.isArray(request.query.projectId)
@@ -117,6 +119,6 @@ export default async function handler(request, response) {
     });
   } catch (error) {
     console.error(error);
-    return response.status(500).json({ error: 'Unable to load project shell' });
+    return response.status(500).json({ error: 'Impossible de charger le shell du projet' });
   }
 }

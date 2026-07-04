@@ -28,76 +28,80 @@ export class MockProjectService {
   getProjectShell() {
     return of<ProjectShell>({
       id: demoProjectId,
-      name: 'Two families, one land',
-      phase: 'Feasibility and legal structure',
-      role: 'Family A representative',
-      scope: 'Shared project view',
+      name: 'Deux familles, un terrain',
+      phase: 'Faisabilité et structure juridique',
+      role: 'Représentant famille A',
+      scope: 'Vue projet partagée',
     }).pipe(delay(120));
   }
 
   getNavigation() {
     return of<NavigationItem[]>([
-      { label: 'Dashboard', path: `/projects/${demoProjectId}/dashboard`, priority: 'P0' },
-      { label: 'Onboarding', path: '/projects/new', priority: 'P0' },
+      { label: 'Tableau de bord', path: `/projects/${demoProjectId}/dashboard`, priority: 'P0' },
+      { label: 'Initialisation', path: '/projects/new', priority: 'P0' },
       { label: 'Documents', path: `/projects/${demoProjectId}/documents`, priority: 'P0' },
       {
-        label: 'Budget and financing',
+        label: 'Budget et financement',
         path: `/projects/${demoProjectId}/budget-financing`,
         priority: 'P0',
       },
       {
-        label: 'Legal structure',
+        label: 'Structure juridique',
         path: `/projects/${demoProjectId}/legal-structure`,
         priority: 'P0',
       },
       {
-        label: 'Urbanism and permits',
+        label: 'Urbanisme et permis',
         path: `/projects/${demoProjectId}/urbanism-permits`,
         priority: 'P0',
       },
       {
-        label: 'Decisions and meetings',
+        label: 'Décisions et réunions',
         path: `/projects/${demoProjectId}/decisions-meetings`,
         priority: 'P0',
       },
-      { label: 'Shared assets', path: `/projects/${demoProjectId}/shared-assets`, priority: 'P0' },
-      { label: 'Risks', path: `/projects/${demoProjectId}/risks`, priority: 'P0' },
       {
-        label: 'Contracts and professionals',
+        label: 'Infrastructures partagées',
+        path: `/projects/${demoProjectId}/shared-assets`,
+        priority: 'P0',
+      },
+      { label: 'Risques', path: `/projects/${demoProjectId}/risks`, priority: 'P0' },
+      {
+        label: 'Contrats et professionnels',
         path: `/projects/${demoProjectId}/contracts-professionals`,
         priority: 'P1',
       },
-      { label: 'Land', path: `/projects/${demoProjectId}/land`, priority: 'P1' },
-      { label: 'Schedule', path: `/projects/${demoProjectId}/schedule`, priority: 'P1' },
+      { label: 'Terrain', path: `/projects/${demoProjectId}/land`, priority: 'P1' },
+      { label: 'Planning', path: `/projects/${demoProjectId}/schedule`, priority: 'P1' },
       {
-        label: 'Site and quality',
+        label: 'Chantier et qualité',
         path: `/projects/${demoProjectId}/site-quality`,
         priority: 'P1',
       },
       {
-        label: 'Reports and exports',
+        label: 'Rapports et exports',
         path: `/projects/${demoProjectId}/reports-exports`,
         priority: 'P1',
       },
       {
-        label: 'Procurement and materials',
+        label: 'Achats et matériaux',
         path: `/projects/${demoProjectId}/procurement-materials`,
         priority: 'P2',
       },
       {
-        label: 'Design and technical',
+        label: 'Conception et technique',
         path: `/projects/${demoProjectId}/design-technical`,
         priority: 'P2',
       },
-      { label: 'Settings', path: `/projects/${demoProjectId}/settings`, priority: 'P0' },
+      { label: 'Paramètres', path: `/projects/${demoProjectId}/settings`, priority: 'P0' },
     ]).pipe(delay(120));
   }
 
   getShellMetrics() {
     return of<ShellMetric[]>([
-      { label: 'Missing documents', value: '14', status: 'warning' },
-      { label: 'Shared blockers', value: '3', status: 'blocked' },
-      { label: 'Pending approvals', value: '5', status: 'warning' },
+      { label: 'Documents manquants', value: '14', status: 'warning' },
+      { label: 'Blocages partagés', value: '3', status: 'blocked' },
+      { label: 'Validations en attente', value: '5', status: 'warning' },
     ]).pipe(delay(120));
   }
 }

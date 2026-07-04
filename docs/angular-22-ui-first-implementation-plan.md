@@ -148,19 +148,19 @@ The repository now contains a minimal Angular 22 application scaffold, a first n
 
 ### Status by Milestone
 
-| Milestone | Status | Notes |
-| --- | --- | --- |
-| Milestone 0: Product UI Skeleton | In progress | Angular scaffold, shell, route map, placeholder pages, and basic styling exist. Remaining gaps: true project switcher, scope selector behavior, command bar, notification entry, mock/offline indicator, lazy routes, and fuller empty states. |
-| Milestone 1: Mock/API Foundation | Started | `GET /api/projects/42/shell` now exists as a Vercel Function backed by Supabase for project fields, with Angular mock fallback. MSW and broader mock endpoint coverage are still not configured. |
-| Milestone 2: Design System and Shared UI Components | Not started | Basic styling exists, but reusable status, scope, money, deadline, permission, dialog, timeline, and matrix components are not built. |
-| Milestone 3: Project Onboarding Wizard | Not started | The route exists as a titled placeholder only. |
-| Milestone 4: Dashboard First Usable Version | Not started | The route exists as a titled placeholder only; shell metrics are not a dashboard implementation. |
-| Milestone 5: Documents Repository | Not started | The route exists as a titled placeholder only. |
-| Milestone 6: Budget, Cost Allocation, and Settlement Ledger | Started | A first budget and financing page/store exists, currently backed by local state rather than Supabase. |
-| Milestone 7: Legal-Structure Scenario Comparison | Not started | The route exists as a titled placeholder only. |
-| Milestone 8: Urbanism and Permit Deadlines | Not started | The route exists as a titled placeholder only. |
-| Milestone 9: Decisions, Approvals, Shared Assets, and Risks | Not started | The routes exist as titled placeholders only. |
-| Milestone 10: P1 Operational Modules | Not started | The routes exist as titled placeholders only. |
+| Milestone                                                   | Status      | Notes                                                                                                                                                                                                                                          |
+| ----------------------------------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Milestone 0: Product UI Skeleton                            | In progress | Angular scaffold, shell, route map, placeholder pages, and basic styling exist. Remaining gaps: true project switcher, scope selector behavior, command bar, notification entry, mock/offline indicator, lazy routes, and fuller empty states. |
+| Milestone 1: Mock/API Foundation                            | Started     | `GET /api/projects/42/shell` now exists as a Vercel Function backed by Supabase for project fields, with Angular mock fallback. MSW and broader mock endpoint coverage are still not configured.                                               |
+| Milestone 2: Design System and Shared UI Components         | Not started | Basic styling exists, but reusable status, scope, money, deadline, permission, dialog, timeline, and matrix components are not built.                                                                                                          |
+| Milestone 3: Project Onboarding Wizard                      | Not started | The route exists as a titled placeholder only.                                                                                                                                                                                                 |
+| Milestone 4: Dashboard First Usable Version                 | Not started | The route exists as a titled placeholder only; shell metrics are not a dashboard implementation.                                                                                                                                               |
+| Milestone 5: Documents Repository                           | Not started | The route exists as a titled placeholder only.                                                                                                                                                                                                 |
+| Milestone 6: Budget, Cost Allocation, and Settlement Ledger | Started     | A first budget and financing page/store exists, currently backed by local state rather than Supabase.                                                                                                                                          |
+| Milestone 7: Legal-Structure Scenario Comparison            | Not started | The route exists as a titled placeholder only.                                                                                                                                                                                                 |
+| Milestone 8: Urbanism and Permit Deadlines                  | Not started | The route exists as a titled placeholder only.                                                                                                                                                                                                 |
+| Milestone 9: Decisions, Approvals, Shared Assets, and Risks | Not started | The routes exist as titled placeholders only.                                                                                                                                                                                                  |
+| Milestone 10: P1 Operational Modules                        | Not started | The routes exist as titled placeholders only.                                                                                                                                                                                                  |
 
 ### Immediate Next Work
 

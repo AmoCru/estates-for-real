@@ -13,22 +13,22 @@ export const routes: Routes = [
   {
     path: 'projects/new',
     ...projectPage(
-      'Project onboarding',
-      'Create a two-family, single-land construction project from mocked template data.',
+      'Initialisation du projet',
+      'Créer un projet de construction pour deux familles sur un seul terrain à partir de données de démonstration.',
     ),
   },
   {
     path: 'projects/:projectId/dashboard',
     ...projectPage(
-      'Dashboard',
-      'Project phase, blockers, deadlines, approvals, budget status, and shared risks.',
+      'Tableau de bord',
+      'Phase du projet, blocages, échéances, validations, état du budget et risques partagés.',
     ),
   },
   {
     path: 'projects/:projectId/documents',
     ...projectPage(
       'Documents',
-      'Evidence repository for permits, contracts, insurance, invoices, and handover files.',
+      'Référentiel des justificatifs pour les permis, contrats, assurances, factures et dossiers de réception.',
     ),
   },
   {
@@ -41,92 +41,92 @@ export const routes: Routes = [
   {
     path: 'projects/:projectId/legal-structure',
     ...projectPage(
-      'Legal structure',
-      'Compare indivision, parcel division, SCI, PCVD, and shared ownership scenarios.',
+      'Structure juridique',
+      "Comparer l'indivision, la division parcellaire, la SCI, le PCVD et les scénarios de propriété partagée.",
     ),
   },
   {
     path: 'projects/:projectId/urbanism-permits',
     ...projectPage(
-      'Urbanism and permits',
-      'Planning rules, permit workflows, deadline tracking, and posting evidence.',
+      'Urbanisme et permis',
+      "Règles d'urbanisme, démarches de permis, suivi des délais et preuves d'affichage.",
     ),
   },
   {
     path: 'projects/:projectId/decisions-meetings',
     ...projectPage(
-      'Decisions and meetings',
-      'Governance, approvals, meeting minutes, and two-family decision records.',
+      'Décisions et réunions',
+      'Gouvernance, validations, comptes rendus et registre des décisions entre les deux familles.',
     ),
   },
   {
     path: 'projects/:projectId/shared-assets',
     ...projectPage(
-      'Shared assets',
-      'Access, networks, drainage, gates, maintenance rules, and shared infrastructure.',
+      'Infrastructures partagées',
+      "Accès, réseaux, drainage, portails, règles d'entretien et équipements communs.",
     ),
   },
   {
     path: 'projects/:projectId/risks',
     ...projectPage(
-      'Risks',
-      'Risk register for legal, finance, planning, technical, schedule, and governance issues.',
+      'Risques',
+      'Registre des risques juridiques, financiers, administratifs, techniques, calendaires et de gouvernance.',
     ),
   },
   {
     path: 'projects/:projectId/contracts-professionals',
     ...projectPage(
-      'Contracts and professionals',
-      'CCMI, contractors, notaire, architect, insurance, and ready-to-sign checks.',
+      'Contrats et professionnels',
+      'CCMI, entreprises, notaire, architecte, assurances et contrôles avant signature.',
     ),
   },
   {
     path: 'projects/:projectId/land',
     ...projectPage(
-      'Land',
-      'Parcel facts, acquisition, boundaries, easements, utilities, and due diligence.',
+      'Terrain',
+      'Données de parcelle, acquisition, limites, servitudes, réseaux et vérifications préalables.',
     ),
   },
   {
     path: 'projects/:projectId/schedule',
     ...projectPage(
-      'Schedule',
-      'House A, House B, shared infrastructure, milestones, and critical path.',
+      'Planning',
+      'Maison A, maison B, infrastructures partagées, jalons et chemin critique.',
     ),
   },
   {
     path: 'projects/:projectId/site-quality',
     ...projectPage(
-      'Site and quality',
-      'Site checklists, inspections, defects, reception, and warranty follow-up.',
+      'Chantier et qualité',
+      'Checklists de chantier, inspections, réserves, réception et suivi des garanties.',
     ),
   },
   {
     path: 'projects/:projectId/reports-exports',
     ...projectPage(
-      'Reports and exports',
-      'Notaire pack, bank dossier, budget reports, reception report, and archive jobs.',
+      'Rapports et exports',
+      'Dossier notaire, dossier bancaire, rapports budgétaires, procès-verbal de réception et archivage.',
     ),
   },
   {
     path: 'projects/:projectId/procurement-materials',
     ...projectPage(
-      'Procurement and materials',
-      'Material catalog, purchase orders, deliveries, stock, and substitutions.',
+      'Achats et matériaux',
+      'Catalogue matériaux, bons de commande, livraisons, stock et substitutions.',
     ),
   },
   {
     path: 'projects/:projectId/design-technical',
     ...projectPage(
-      'Design and technical',
-      'Plans, technical studies, RE2020, soil, sanitation, and compliance attestations.',
+      'Conception et technique',
+      'Plans, études techniques, RE2020, sol, assainissement et attestations de conformité.',
     ),
   },
   {
     path: 'projects/:projectId/settings',
     ...projectPage(
-      'Settings',
-      'Roles, permissions, governance defaults, notifications, integrations, and privacy.',
+      'Paramètres',
+      'Rôles, droits, règles de gouvernance par défaut, notifications, intégrations et confidentialité.',
     ),
   },
   { path: '**', redirectTo: 'projects/42/dashboard' },

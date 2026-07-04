@@ -34,13 +34,39 @@ export interface BudgetFinancingState {
 
 const storageKey = 'estates-for-real:budget-financing:v1';
 
+const categoryTranslations: Record<string, string> = {
+  Contingency: 'Provision pour imprévus',
+  'House A private works': 'Travaux privés maison A',
+  'House B private works': 'Travaux privés maison B',
+  'Insurance and guarantees': 'Assurances et garanties',
+  'Land acquisition': 'Acquisition du terrain',
+  'Legal and administration': 'Juridique et administration',
+  'Shared infrastructure': 'Infrastructure partagée',
+  'Taxes and public charges': 'Taxes et charges publiques',
+  'Technical studies': 'Études techniques',
+};
+
+const budgetLineTranslations: Record<string, string> = {
+  'Estimated notarial fees and duties': 'Frais de notaire et droits estimés',
+  'G2 soil study': 'Étude de sol G2',
+  'House A window upgrade': 'Amélioration des fenêtres de la maison A',
+  'Land purchase price': "Prix d'achat du terrain",
+  'Shared driveway and access works': "Allée commune et travaux d'accès",
+};
+
+const financingSourceTranslations: Record<string, string> = {
+  'Family A construction loan': 'Prêt construction famille A',
+  'Family B construction loan': 'Prêt construction famille B',
+  'Shared personal contribution': 'Apport personnel commun',
+};
+
 const initialState = (): BudgetFinancingState => ({
   updatedAt: new Date().toISOString(),
   budgetLines: [
     {
       id: 'land-purchase',
-      category: 'Land acquisition',
-      label: 'Land purchase price',
+      category: 'Acquisition du terrain',
+      label: "Prix d'achat du terrain",
       scope: 'shared',
       amount: 220000,
       paidBy: 'not-paid',
@@ -49,8 +75,8 @@ const initialState = (): BudgetFinancingState => ({
     },
     {
       id: 'notaire-fees',
-      category: 'Legal and administration',
-      label: 'Estimated notarial fees and duties',
+      category: 'Juridique et administration',
+      label: 'Frais de notaire et droits estimés',
       scope: 'shared',
       amount: 18000,
       paidBy: 'not-paid',
@@ -59,8 +85,8 @@ const initialState = (): BudgetFinancingState => ({
     },
     {
       id: 'shared-driveway',
-      category: 'Shared infrastructure',
-      label: 'Shared driveway and access works',
+      category: 'Infrastructure partagée',
+      label: "Allée commune et travaux d'accès",
       scope: 'shared',
       amount: 20000,
       paidBy: 'family-a',
@@ -69,8 +95,8 @@ const initialState = (): BudgetFinancingState => ({
     },
     {
       id: 'house-a-upgrade',
-      category: 'House A private works',
-      label: 'House A window upgrade',
+      category: 'Travaux privés maison A',
+      label: 'Amélioration des fenêtres de la maison A',
       scope: 'family-a',
       amount: 8500,
       paidBy: 'family-a',
@@ -79,8 +105,8 @@ const initialState = (): BudgetFinancingState => ({
     },
     {
       id: 'soil-study',
-      category: 'Technical studies',
-      label: 'G2 soil study',
+      category: 'Études techniques',
+      label: 'Étude de sol G2',
       scope: 'shared',
       amount: 2800,
       paidBy: 'family-b',
@@ -91,7 +117,7 @@ const initialState = (): BudgetFinancingState => ({
   financingSources: [
     {
       id: 'family-a-loan',
-      label: 'Family A construction loan',
+      label: 'Prêt construction famille A',
       owner: 'family-a',
       type: 'loan',
       status: 'pending',
@@ -99,7 +125,7 @@ const initialState = (): BudgetFinancingState => ({
     },
     {
       id: 'family-b-loan',
-      label: 'Family B construction loan',
+      label: 'Prêt construction famille B',
       owner: 'family-b',
       type: 'loan',
       status: 'pending',
@@ -107,7 +133,7 @@ const initialState = (): BudgetFinancingState => ({
     },
     {
       id: 'shared-savings',
-      label: 'Shared personal contribution',
+      label: 'Apport personnel commun',
       owner: 'shared',
       type: 'personal-contribution',
       status: 'secured',
@@ -192,10 +218,25 @@ export class BudgetFinancingStore {
 
   private normalizeState(state: Partial<BudgetFinancingState>): BudgetFinancingState {
     return {
-      budgetLines: Array.isArray(state.budgetLines) ? state.budgetLines : [],
-      financingSources: Array.isArray(state.financingSources) ? state.financingSources : [],
+      budgetLines: Array.isArray(state.budgetLines)
+        ? state.budgetLines.map((line) => ({
+            ...line,
+            category: this.translateStoredValue(line.category, categoryTranslations),
+            label: this.translateStoredValue(line.label, budgetLineTranslations),
+          }))
+        : [],
+      financingSources: Array.isArray(state.financingSources)
+        ? state.financingSources.map((source) => ({
+            ...source,
+            label: this.translateStoredValue(source.label, financingSourceTranslations),
+          }))
+        : [],
       updatedAt: typeof state.updatedAt === 'string' ? state.updatedAt : new Date().toISOString(),
     };
+  }
+
+  private translateStoredValue(value: string, translations: Record<string, string>): string {
+    return translations[value] ?? value;
   }
 
   private writeState(state: BudgetFinancingState): void {
