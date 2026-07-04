@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
-import { MockProjectService } from './core/mock-backend/mock-project.service';
+import { ProjectApiService } from './core/api/project-api.service';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +11,9 @@ import { MockProjectService } from './core/mock-backend/mock-project.service';
   styleUrl: './app.scss',
 })
 export class App {
-  private readonly mockProject = inject(MockProjectService);
+  private readonly projectApi = inject(ProjectApiService);
 
-  protected readonly project = toSignal(this.mockProject.getProjectShell(), { initialValue: null });
-  protected readonly navigation = toSignal(this.mockProject.getNavigation(), { initialValue: [] });
-  protected readonly metrics = toSignal(this.mockProject.getShellMetrics(), { initialValue: [] });
+  protected readonly project = toSignal(this.projectApi.getProjectShell(), { initialValue: null });
+  protected readonly navigation = toSignal(this.projectApi.getNavigation(), { initialValue: [] });
+  protected readonly metrics = toSignal(this.projectApi.getShellMetrics(), { initialValue: [] });
 }

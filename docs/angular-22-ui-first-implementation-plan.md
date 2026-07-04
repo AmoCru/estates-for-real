@@ -107,7 +107,7 @@ Do not start with procurement, advanced integrations, OCR, offline sync, or full
 
 Last updated: 2026-07-04
 
-The repository now contains a minimal Angular 22 application scaffold and a first navigable product shell. The current implementation is intentionally thin: it proves the route map and application frame, while the domain pages are still placeholders with titles and descriptions.
+The repository now contains a minimal Angular 22 application scaffold, a first navigable product shell, and an initial Vercel Function backed by Supabase for the project shell. The current implementation is still intentionally thin: it proves the route map, application frame, and first server-side data access path, while most domain pages remain placeholders with titles and descriptions.
 
 ### Completed
 
@@ -121,22 +121,27 @@ The repository now contains a minimal Angular 22 application scaffold and a firs
 8. Every route renders a page title and short description.
 9. Basic responsive styling and design tokens are in place.
 10. Initial application test updated for the new shell.
+11. `ProjectApiService` added at `src/app/core/api/project-api.service.ts` and wired through Angular `HttpClient`.
+12. Vercel Function added at `api/projects/[projectId]/shell.js` for `GET /api/projects/42/shell`.
+13. Supabase `projects` table access validated through `.env`, with the current demo project using numeric database id `42`.
+14. App routes, brand navigation, API calls, and mock fallback data now use project route id `42`.
 
 ### Verified
 
 1. `npm run build` passed.
 2. `npm test -- --watch=false` passed.
-3. `git diff --check` passed.
-4. The development server responded with HTTP `200 OK` at `http://127.0.0.1:4200/` during the initial scaffold validation.
+3. `node --check api/projects/[projectId]/shell.js` passed.
+4. The local Vercel Function handler returned HTTP `200` for project id `42` using `.env` Supabase settings.
+5. The development server responded with HTTP `200 OK` at `http://127.0.0.1:4200/` during the initial scaffold validation.
 
 ### Known Limitations of the Current App
 
-1. The current mock layer is an injected Angular service using RxJS delays, not HTTP-boundary mocking yet.
+1. Only the shell endpoint has a real Vercel Function; most feature data is still local or placeholder state.
 2. MSW or an equivalent mock HTTP layer is not installed or configured yet.
-3. Feature routes are present but not lazy-loaded yet.
-4. Domain pages are placeholders only; no domain workflow is implemented yet.
+3. The mock fallback remains an injected Angular service using RxJS delays, not HTTP-boundary mocking yet.
+4. Most feature routes are placeholders; the budget and financing route has the first domain page implementation.
 5. There is no real project switcher, scope selector, command bar, notification center, permission model, or route guard yet.
-6. The shell metrics are static mocked values and do not reflect route-specific state.
+6. The shell metrics are static values returned by the function and do not reflect route-specific state.
 7. There are no typed backend DTO contracts beyond the small shell-facing interfaces.
 8. There are no e2e tests yet.
 9. The generated app files are currently uncommitted.
@@ -146,12 +151,12 @@ The repository now contains a minimal Angular 22 application scaffold and a firs
 | Milestone | Status | Notes |
 | --- | --- | --- |
 | Milestone 0: Product UI Skeleton | In progress | Angular scaffold, shell, route map, placeholder pages, and basic styling exist. Remaining gaps: true project switcher, scope selector behavior, command bar, notification entry, mock/offline indicator, lazy routes, and fuller empty states. |
-| Milestone 1: Mock API Foundation | Not started | Current mock service is useful for shell data, but it is not the planned HTTP-boundary mock API. |
+| Milestone 1: Mock/API Foundation | Started | `GET /api/projects/42/shell` now exists as a Vercel Function backed by Supabase for project fields, with Angular mock fallback. MSW and broader mock endpoint coverage are still not configured. |
 | Milestone 2: Design System and Shared UI Components | Not started | Basic styling exists, but reusable status, scope, money, deadline, permission, dialog, timeline, and matrix components are not built. |
 | Milestone 3: Project Onboarding Wizard | Not started | The route exists as a titled placeholder only. |
 | Milestone 4: Dashboard First Usable Version | Not started | The route exists as a titled placeholder only; shell metrics are not a dashboard implementation. |
 | Milestone 5: Documents Repository | Not started | The route exists as a titled placeholder only. |
-| Milestone 6: Budget, Cost Allocation, and Settlement Ledger | Not started | The route exists as a titled placeholder only. |
+| Milestone 6: Budget, Cost Allocation, and Settlement Ledger | Started | A first budget and financing page/store exists, currently backed by local state rather than Supabase. |
 | Milestone 7: Legal-Structure Scenario Comparison | Not started | The route exists as a titled placeholder only. |
 | Milestone 8: Urbanism and Permit Deadlines | Not started | The route exists as a titled placeholder only. |
 | Milestone 9: Decisions, Approvals, Shared Assets, and Risks | Not started | The routes exist as titled placeholders only. |
@@ -159,15 +164,16 @@ The repository now contains a minimal Angular 22 application scaffold and a firs
 
 ### Immediate Next Work
 
-1. Convert the current injected mock service into a real mock API boundary, preferably MSW.
-2. Introduce typed DTOs for user, project shell, navigation summary, permissions, command response, validation error, deadline, money, scope, and audit metadata.
-3. Add an API client wrapper around Angular `HttpClient`.
-4. Add a command service for audited mutations, even before real backend endpoints exist.
-5. Split the route placeholders into lazy-loaded feature route files.
-6. Build the missing shell controls: project switcher, scope selector, command bar, notification entry point, and mock/offline indicator.
-7. Create the first reusable UI components: status badge, scope badge, deadline badge, money amount, empty state, error state, and permission gate.
-8. Add Playwright and one route smoke test for opening the app and navigating through the shell.
-9. Start Milestone 3 by replacing the onboarding placeholder with the first wizard flow.
+1. Decide whether project URLs should remain numeric (`42`) or move to stable slugs before adding more project endpoints.
+2. Expand the Supabase-backed API beyond shell data: permissions, project list, dashboard summary, documents summary, and budget summary.
+3. Convert the current injected mock fallback into a real mock API boundary, preferably MSW.
+4. Introduce typed DTOs for user, project shell, navigation summary, permissions, command response, validation error, deadline, money, scope, and audit metadata.
+5. Add a command service for audited mutations, even before real backend endpoints exist.
+6. Split remaining route placeholders into lazy-loaded feature route files.
+7. Build the missing shell controls: project switcher, scope selector, command bar, notification entry point, and mock/offline indicator.
+8. Create the first reusable UI components: status badge, scope badge, deadline badge, money amount, empty state, error state, and permission gate.
+9. Add Playwright and one route smoke test for opening the app and navigating through the shell.
+10. Start Milestone 3 by replacing the onboarding placeholder with the first wizard flow.
 
 ## 6. Milestone Plan
 
@@ -581,6 +587,14 @@ Required P0 e2e scenarios:
 ## 11. Backend Replacement Strategy
 
 Mocks must be replaceable route by route.
+
+Current transition state:
+
+1. The shell has moved from mock-only data to `GET /api/projects/42/shell`.
+2. The Vercel Function reads project fields from Supabase and still generates navigation and metrics locally.
+3. Angular components call `ProjectApiService`; they do not import Supabase or Vercel-specific code directly.
+4. The injected mock service remains as a local fallback when the function is unavailable.
+5. Local Angular-only development can use `ng serve`, but local function testing should use `npx vercel dev` or direct function-handler checks with `.env` loaded.
 
 Replacement process:
 

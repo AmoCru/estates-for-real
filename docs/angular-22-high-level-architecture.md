@@ -20,6 +20,15 @@ Primary goals:
 
 The Angular app is the authenticated user interface. It must not be responsible for authoritative legal calculations, document storage security, payment processing, OCR processing, PDF rendering at scale, or audit-log integrity. Those responsibilities belong to backend services.
 
+Current MVP deployment snapshot:
+
+1. The frontend is deployed on Vercel from GitHub.
+2. The first backend-for-frontend endpoint is a Vercel Function at `GET /api/projects/42/shell`.
+3. The function reads project shell fields from a Supabase `projects` table using server-side environment variables.
+4. The current Supabase-backed project uses numeric database id `42`; the Angular route id is represented as the string `'42'`.
+5. Shell navigation and shell metrics are still generated in the Vercel Function from local constants.
+6. The Angular app calls the function through `ProjectApiService` and falls back to the mock project service if the function is unavailable.
+
 ```mermaid
 flowchart LR
     User[Families and professionals] --> Web[Angular 22 web app]
@@ -419,6 +428,30 @@ Example domain facade responsibilities:
 ## 9. API and Command Design
 
 The Angular app should call a backend-for-frontend API optimized for the web UI. The BFF hides backend service complexity and centralizes authorization, audit, validation, and response shaping.
+
+Current implemented BFF endpoint:
+
+```text
+GET /api/projects/42/shell
+```
+
+Response shape:
+
+```json
+{
+  "project": {
+    "id": "42",
+    "name": "Two families, one land",
+    "phase": "Feasibility and legal structure",
+    "role": "Family A representative",
+    "scope": "Shared project view"
+  },
+  "navigation": [],
+  "metrics": []
+}
+```
+
+This endpoint is the first production-style API boundary. It should be treated as temporary scaffolding until project selection, permissions, dashboard summaries, and typed DTO contracts are formalized.
 
 Preferred API patterns:
 

@@ -21,7 +21,7 @@ export interface ShellMetric {
   status: 'good' | 'warning' | 'blocked';
 }
 
-const demoProjectId = 'demo-project';
+const demoProjectId = '42';
 
 @Injectable({ providedIn: 'root' })
 export class MockProjectService {
@@ -40,19 +40,55 @@ export class MockProjectService {
       { label: 'Dashboard', path: `/projects/${demoProjectId}/dashboard`, priority: 'P0' },
       { label: 'Onboarding', path: '/projects/new', priority: 'P0' },
       { label: 'Documents', path: `/projects/${demoProjectId}/documents`, priority: 'P0' },
-      { label: 'Budget and financing', path: `/projects/${demoProjectId}/budget-financing`, priority: 'P0' },
-      { label: 'Legal structure', path: `/projects/${demoProjectId}/legal-structure`, priority: 'P0' },
-      { label: 'Urbanism and permits', path: `/projects/${demoProjectId}/urbanism-permits`, priority: 'P0' },
-      { label: 'Decisions and meetings', path: `/projects/${demoProjectId}/decisions-meetings`, priority: 'P0' },
+      {
+        label: 'Budget and financing',
+        path: `/projects/${demoProjectId}/budget-financing`,
+        priority: 'P0',
+      },
+      {
+        label: 'Legal structure',
+        path: `/projects/${demoProjectId}/legal-structure`,
+        priority: 'P0',
+      },
+      {
+        label: 'Urbanism and permits',
+        path: `/projects/${demoProjectId}/urbanism-permits`,
+        priority: 'P0',
+      },
+      {
+        label: 'Decisions and meetings',
+        path: `/projects/${demoProjectId}/decisions-meetings`,
+        priority: 'P0',
+      },
       { label: 'Shared assets', path: `/projects/${demoProjectId}/shared-assets`, priority: 'P0' },
       { label: 'Risks', path: `/projects/${demoProjectId}/risks`, priority: 'P0' },
-      { label: 'Contracts and professionals', path: `/projects/${demoProjectId}/contracts-professionals`, priority: 'P1' },
+      {
+        label: 'Contracts and professionals',
+        path: `/projects/${demoProjectId}/contracts-professionals`,
+        priority: 'P1',
+      },
       { label: 'Land', path: `/projects/${demoProjectId}/land`, priority: 'P1' },
       { label: 'Schedule', path: `/projects/${demoProjectId}/schedule`, priority: 'P1' },
-      { label: 'Site and quality', path: `/projects/${demoProjectId}/site-quality`, priority: 'P1' },
-      { label: 'Reports and exports', path: `/projects/${demoProjectId}/reports-exports`, priority: 'P1' },
-      { label: 'Procurement and materials', path: `/projects/${demoProjectId}/procurement-materials`, priority: 'P2' },
-      { label: 'Design and technical', path: `/projects/${demoProjectId}/design-technical`, priority: 'P2' },
+      {
+        label: 'Site and quality',
+        path: `/projects/${demoProjectId}/site-quality`,
+        priority: 'P1',
+      },
+      {
+        label: 'Reports and exports',
+        path: `/projects/${demoProjectId}/reports-exports`,
+        priority: 'P1',
+      },
+      {
+        label: 'Procurement and materials',
+        path: `/projects/${demoProjectId}/procurement-materials`,
+        priority: 'P2',
+      },
+      {
+        label: 'Design and technical',
+        path: `/projects/${demoProjectId}/design-technical`,
+        priority: 'P2',
+      },
       { label: 'Settings', path: `/projects/${demoProjectId}/settings`, priority: 'P0' },
     ]).pipe(delay(120));
   }
