@@ -103,7 +103,73 @@ Start with the screens that prove the product value for two families building tw
 
 Do not start with procurement, advanced integrations, OCR, offline sync, or full report generation. Represent them as mocked placeholders or job-status screens until the P0 user flows are stable.
 
-## 5. Milestone Plan
+## 5. Current Implementation Status
+
+Last updated: 2026-07-04
+
+The repository now contains a minimal Angular 22 application scaffold and a first navigable product shell. The current implementation is intentionally thin: it proves the route map and application frame, while the domain pages are still placeholders with titles and descriptions.
+
+### Completed
+
+1. Angular 22 application scaffolded in the repository root.
+2. Strict TypeScript, routing, SCSS, Vitest, and Angular CLI configuration generated.
+3. NPM scripts updated so Angular commands run through temporary `node@24.15.0`, because the local machine has Node `24.12.0` and Angular 22 requires at least `24.15.0` on the Node 24 line.
+4. Application shell implemented with sidebar navigation, top project context, current role, project phase, and three summary metrics.
+5. Mock project data service added at `src/app/core/mock-backend/mock-project.service.ts`.
+6. All MVP and planned product routes are present in `src/app/app.routes.ts`.
+7. A reusable placeholder page component exists at `src/app/pages/placeholder-page.ts`.
+8. Every route renders a page title and short description.
+9. Basic responsive styling and design tokens are in place.
+10. Initial application test updated for the new shell.
+
+### Verified
+
+1. `npm run build` passed.
+2. `npm test -- --watch=false` passed.
+3. `git diff --check` passed.
+4. The development server responded with HTTP `200 OK` at `http://127.0.0.1:4200/` during the initial scaffold validation.
+
+### Known Limitations of the Current App
+
+1. The current mock layer is an injected Angular service using RxJS delays, not HTTP-boundary mocking yet.
+2. MSW or an equivalent mock HTTP layer is not installed or configured yet.
+3. Feature routes are present but not lazy-loaded yet.
+4. Domain pages are placeholders only; no domain workflow is implemented yet.
+5. There is no real project switcher, scope selector, command bar, notification center, permission model, or route guard yet.
+6. The shell metrics are static mocked values and do not reflect route-specific state.
+7. There are no typed backend DTO contracts beyond the small shell-facing interfaces.
+8. There are no e2e tests yet.
+9. The generated app files are currently uncommitted.
+
+### Status by Milestone
+
+| Milestone | Status | Notes |
+| --- | --- | --- |
+| Milestone 0: Product UI Skeleton | In progress | Angular scaffold, shell, route map, placeholder pages, and basic styling exist. Remaining gaps: true project switcher, scope selector behavior, command bar, notification entry, mock/offline indicator, lazy routes, and fuller empty states. |
+| Milestone 1: Mock API Foundation | Not started | Current mock service is useful for shell data, but it is not the planned HTTP-boundary mock API. |
+| Milestone 2: Design System and Shared UI Components | Not started | Basic styling exists, but reusable status, scope, money, deadline, permission, dialog, timeline, and matrix components are not built. |
+| Milestone 3: Project Onboarding Wizard | Not started | The route exists as a titled placeholder only. |
+| Milestone 4: Dashboard First Usable Version | Not started | The route exists as a titled placeholder only; shell metrics are not a dashboard implementation. |
+| Milestone 5: Documents Repository | Not started | The route exists as a titled placeholder only. |
+| Milestone 6: Budget, Cost Allocation, and Settlement Ledger | Not started | The route exists as a titled placeholder only. |
+| Milestone 7: Legal-Structure Scenario Comparison | Not started | The route exists as a titled placeholder only. |
+| Milestone 8: Urbanism and Permit Deadlines | Not started | The route exists as a titled placeholder only. |
+| Milestone 9: Decisions, Approvals, Shared Assets, and Risks | Not started | The routes exist as titled placeholders only. |
+| Milestone 10: P1 Operational Modules | Not started | The routes exist as titled placeholders only. |
+
+### Immediate Next Work
+
+1. Convert the current injected mock service into a real mock API boundary, preferably MSW.
+2. Introduce typed DTOs for user, project shell, navigation summary, permissions, command response, validation error, deadline, money, scope, and audit metadata.
+3. Add an API client wrapper around Angular `HttpClient`.
+4. Add a command service for audited mutations, even before real backend endpoints exist.
+5. Split the route placeholders into lazy-loaded feature route files.
+6. Build the missing shell controls: project switcher, scope selector, command bar, notification entry point, and mock/offline indicator.
+7. Create the first reusable UI components: status badge, scope badge, deadline badge, money amount, empty state, error state, and permission gate.
+8. Add Playwright and one route smoke test for opening the app and navigating through the shell.
+9. Start Milestone 3 by replacing the onboarding placeholder with the first wizard flow.
+
+## 6. Milestone Plan
 
 ### Milestone 0: Product UI Skeleton
 
@@ -421,7 +487,7 @@ Acceptance criteria:
 3. Defect capture is mobile-friendly.
 4. Report export displays asynchronous job progress and expiring download links.
 
-## 6. Vertical Slice Definition of Done
+## 7. Vertical Slice Definition of Done
 
 Every UI slice is complete only when it includes:
 
@@ -443,7 +509,7 @@ Every UI slice is complete only when it includes:
 16. Component tests for important UI states.
 17. One e2e smoke path for P0 routes.
 
-## 7. Mock API Endpoint Matrix for P0
+## 8. Mock API Endpoint Matrix for P0
 
 | Feature         | Endpoint                                                                | Purpose                   | Mock states                                      |
 | --------------- | ----------------------------------------------------------------------- | ------------------------- | ------------------------------------------------ |
@@ -465,7 +531,7 @@ Every UI slice is complete only when it includes:
 | Shared assets   | `GET /api/projects/:projectId/shared-assets`                            | Shared asset list         | complete, missing ownership, missing maintenance |
 | Risks           | `GET /api/projects/:projectId/risks`                                    | Risk register             | low, high, accepted, overdue mitigation          |
 
-## 8. UI Build Order by Route
+## 9. UI Build Order by Route
 
 Build routes in this order:
 
@@ -489,7 +555,7 @@ Build routes in this order:
 
 Settings appears late in the visual build order but must have early technical stubs for permissions, roles, and governance defaults.
 
-## 9. Testing Plan While Backend Is Mocked
+## 10. Testing Plan While Backend Is Mocked
 
 Testing must prove that UI behavior is not coupled to fixture imports.
 
@@ -512,7 +578,7 @@ Required P0 e2e scenarios:
 7. Vote on a shared decision as both families.
 8. Accept a high risk and verify the decision record exists.
 
-## 10. Backend Replacement Strategy
+## 11. Backend Replacement Strategy
 
 Mocks must be replaceable route by route.
 
@@ -528,7 +594,7 @@ Replacement process:
 
 Do not change component code when switching from mock to real backend. If component code must change, the API boundary is too leaky.
 
-## 11. Team Workflow
+## 12. Team Workflow
 
 Recommended workflow for each feature:
 
@@ -551,7 +617,7 @@ Feature handoff artifact:
 7. Open backend questions.
 8. Acceptance criteria.
 
-## 12. First Two-Week Sprint Proposal
+## 13. First Two-Week Sprint Proposal
 
 Sprint goal: produce a demoable Angular shell with mocked project data and the first two-family onboarding path.
 
@@ -574,7 +640,7 @@ Sprint exit criteria:
 4. Mock project shell updates after creation.
 5. Tests pass for route smoke path and core mapper/facade behavior.
 
-## 13. Early Technical Decisions to Make Before Coding
+## 14. Early Technical Decisions to Make Before Coding
 
 1. Angular CLI workspace or Nx workspace.
 2. Styling stack: plain SCSS with design tokens, Angular Material, Tailwind, or another component foundation.

@@ -1,0 +1,59 @@
+<div class="app-shell">
+  <aside class="sidebar" aria-label="Primary navigation">
+    <a class="brand" routerLink="/projects/demo-project/dashboard" aria-label="Estates for Real dashboard">
+      <span class="brand-mark">ER</span>
+      <span>
+        <strong>Estates for Real</strong>
+        <small>Construction project control</small>
+      </span>
+    </a>
+
+    <nav>
+      @for (item of navigation(); track item.path) {
+        <a
+          class="nav-link"
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.path === '/projects/new' }"
+        >
+          <span>{{ item.label }}</span>
+          <small>{{ item.priority }}</small>
+        </a>
+      }
+    </nav>
+  </aside>
+
+  <section class="workspace">
+    <header class="topbar">
+      @if (project(); as currentProject) {
+        <div>
+          <p class="eyebrow">{{ currentProject.scope }}</p>
+          <h2>{{ currentProject.name }}</h2>
+          <span>{{ currentProject.phase }}</span>
+        </div>
+        <div class="user-chip" aria-label="Current role">
+          {{ currentProject.role }}
+        </div>
+      } @else {
+        <div>
+          <p class="eyebrow">Loading mock project</p>
+          <h2>Preparing workspace</h2>
+          <span>Mock backend call in progress</span>
+        </div>
+      }
+    </header>
+
+    <section class="metrics" aria-label="Project summary">
+      @for (metric of metrics(); track metric.label) {
+        <article class="metric" [class]="metric.status">
+          <span>{{ metric.label }}</span>
+          <strong>{{ metric.value }}</strong>
+        </article>
+      }
+    </section>
+
+    <main class="content">
+      <router-outlet />
+    </main>
+  </section>
+</div>
